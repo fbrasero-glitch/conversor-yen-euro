@@ -54,7 +54,7 @@ html, body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 6px 16px 2px 16px;
+  padding: 6px 14px 2px 14px;
 }
 
 .status-pill {
@@ -114,23 +114,24 @@ html, body {
   transform: rotate(360deg);
 }
 
-/* Display Container - Minimized Padding & Gaps */
+/* Display Container - Expanded to fill screen height fully */
 .display-container {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 2px 12px;
-  gap: 4px;
+  justify-content: stretch;
+  padding: 4px 10px;
+  gap: 6px;
 }
 
-/* Display Rows - Slimmer and Full Width */
+/* Display Rows - Stretching vertically to eliminate empty slots */
 .display-row {
+  flex: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: clamp(10px, 1.8dvh, 16px) 14px;
-  border-radius: 14px;
+  padding: 12px 16px;
+  border-radius: 16px;
   background-color: rgba(255, 255, 255, 0.025);
   border: 1.5px solid transparent;
   cursor: pointer;
@@ -158,8 +159,8 @@ html, body {
   border-radius: 50%;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
   display: block;
-  width: clamp(22px, 3dvh, 26px);
-  height: clamp(22px, 3dvh, 26px);
+  width: clamp(24px, 3.4dvh, 30px);
+  height: clamp(24px, 3.4dvh, 30px);
 }
 
 .currency-meta {
@@ -168,14 +169,14 @@ html, body {
 }
 
 .currency-code {
-  font-size: clamp(15px, 2.2dvh, 18px);
+  font-size: clamp(16px, 2.4dvh, 20px);
   font-weight: 700;
   letter-spacing: 0.5px;
   line-height: 1.2;
 }
 
 .currency-name {
-  font-size: clamp(10px, 1.4dvh, 11px);
+  font-size: clamp(10px, 1.4dvh, 12px);
   color: var(--color-text-secondary);
   margin-top: 1px;
 }
@@ -196,14 +197,14 @@ html, body {
 }
 
 .currency-symbol {
-  font-size: clamp(16px, 2.6dvh, 22px);
+  font-size: clamp(18px, 2.8dvh, 24px);
   font-weight: 300;
   color: var(--color-text-secondary);
   margin-right: 4px;
 }
 
 .currency-value {
-  font-size: clamp(26px, 4.2dvh, 36px);
+  font-size: clamp(28px, 4.4dvh, 38px);
   font-weight: 500;
   white-space: nowrap;
   letter-spacing: -0.5px;
@@ -217,7 +218,7 @@ html, body {
 .cursor {
   display: inline-block;
   width: 2.5px;
-  height: clamp(22px, 3.6dvh, 30px);
+  height: clamp(24px, 3.8dvh, 32px);
   background-color: var(--color-key-orange);
   margin-left: 4px;
   border-radius: 1px;
@@ -225,12 +226,12 @@ html, body {
   animation: blink 1s step-start infinite;
 }
 
-/* Divider & Rate Preview - Shrunk */
+/* Divider & Rate Preview */
 .divider {
   position: relative;
   height: 1px;
   background-color: rgba(255, 255, 255, 0.08);
-  margin: 4px 12px;
+  margin: 2px 12px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -240,7 +241,7 @@ html, body {
   position: absolute;
   background-color: var(--color-bg);
   padding: 0 12px;
-  font-size: clamp(10px, 1.5dvh, 12px);
+  font-size: clamp(11px, 1.6dvh, 13px);
   font-weight: 500;
   color: var(--color-text-secondary);
   letter-spacing: 0.2px;
@@ -249,21 +250,21 @@ html, body {
 /* Keypad Section - Maximized to span entire width and height */
 .keypad-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 1fr stretches keys to fill full screen width */
+  grid-template-columns: repeat(3, 1fr);
   justify-content: stretch;
-  gap: 8px; /* Tighter gap to maximize key surface area */
-  padding: 4px 10px clamp(8px, 2dvh, 16px) 10px; /* Reduced paddings */
+  gap: 8px;
+  padding: 2px 10px clamp(4px, 1.5dvh, 12px) 10px;
   background-color: var(--color-bg);
   width: 100%;
 }
 
-/* Key Button - Replaced aspect-ratio circle with rounded rectangle to prevent vertical clipping */
+/* Key Button - Taller responsive height */
 .key {
-  width: 100%; /* Stretches to fill columns */
-  height: clamp(54px, 7.8dvh, 72px); /* Scales height with screen space */
-  border-radius: 16px; /* Cohesive rounded tiles */
+  width: 100%;
+  height: clamp(62px, 9.2dvh, 85px); /* Taller keys to fill height */
+  border-radius: 16px;
   border: none;
-  font-size: clamp(22px, 3.4dvh, 28px);
+  font-size: clamp(24px, 3.6dvh, 30px); /* Larger key text */
   font-weight: 400;
   color: var(--color-text-primary);
   display: flex;
@@ -281,8 +282,8 @@ html, body {
 }
 
 .key svg {
-  width: clamp(20px, 2.8dvh, 24px);
-  height: clamp(20px, 2.8dvh, 24px);
+  width: clamp(22px, 3.2dvh, 26px);
+  height: clamp(22px, 3.2dvh, 26px);
 }
 
 /* Button variants */
@@ -323,7 +324,7 @@ html, body {
   grid-column: span 2;
   border-radius: 16px;
   width: 100%;
-  height: clamp(54px, 7.8dvh, 72px);
+  height: clamp(62px, 9.2dvh, 85px);
   justify-content: flex-start;
-  padding-left: clamp(24px, 5vw, 36px);
+  padding-left: clamp(28px, 6vw, 42px);
 }
