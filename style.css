@@ -1,4 +1,4 @@
-/* iOS Calculator Inspired Stylesheet - Fluid Responsive Version */
+/* iOS Calculator Inspired Stylesheet - Full Bleed Screen-Fit Version */
 
 :root {
   --color-bg: #000000;
@@ -26,7 +26,7 @@
 
 html, body {
   width: 100%;
-  height: 100dvh; /* Dynamic viewport height to account for mobile browser bars */
+  height: 100dvh;
   background-color: var(--color-bg);
   color: var(--color-text-primary);
   font-family: var(--font-family);
@@ -44,50 +44,47 @@ html, body {
   height: 100dvh;
   max-width: 450px; /* Centered layout for larger screens */
   margin: 0 auto;
-  padding-top: env(safe-area-inset-top, 10px);
-  padding-bottom: env(safe-area-inset-bottom, 10px);
+  padding-top: env(safe-area-inset-top, 4px);
+  padding-bottom: env(safe-area-inset-bottom, 8px);
   background-color: var(--color-bg);
 }
 
-/* Header Section */
+/* Header Section - Minimized Padding */
 .app-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: clamp(8px, 1.8dvh, 16px) 24px clamp(4px, 1dvh, 8px) 24px;
+  padding: 6px 16px 2px 16px;
 }
 
 .status-pill {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   background-color: rgba(255, 255, 255, 0.08);
-  padding: 5px 12px;
+  padding: 4px 10px;
   border-radius: 20px;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  transition: background-color 0.3s;
 }
 
 .status-dot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background-color: var(--color-status-online);
-  box-shadow: 0 0 8px var(--color-status-online);
-  transition: background-color 0.3s, box-shadow 0.3s;
+  box-shadow: 0 0 6px var(--color-status-online);
 }
 
 .status-pill.offline .status-dot {
   background-color: var(--color-status-offline);
-  box-shadow: 0 0 8px var(--color-status-offline);
+  box-shadow: 0 0 6px var(--color-status-offline);
 }
 
 .status-text {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   color: var(--color-text-primary);
-  letter-spacing: -0.2px;
 }
 
 .refresh-btn {
@@ -95,12 +92,11 @@ html, body {
   border: none;
   color: var(--color-text-secondary);
   cursor: pointer;
-  padding: 6px;
+  padding: 4px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color 0.2s, background-color 0.2s;
 }
 
 .refresh-btn:active {
@@ -110,46 +106,41 @@ html, body {
 
 .refresh-btn svg {
   transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-  width: clamp(18px, 2.4dvh, 22px);
-  height: clamp(18px, 2.4dvh, 22px);
+  width: clamp(16px, 2.2dvh, 20px);
+  height: clamp(16px, 2.2dvh, 20px);
 }
 
 .refresh-btn.spinning svg {
   transform: rotate(360deg);
 }
 
-/* Display Container (EUR/JPY rows) */
+/* Display Container - Minimized Padding & Gaps */
 .display-container {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(4px, 1dvh, 12px) 24px;
-  gap: clamp(6px, 1.2dvh, 12px);
+  padding: 2px 12px;
+  gap: 4px;
 }
 
-/* Display Rows */
+/* Display Rows - Slimmer and Full Width */
 .display-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: clamp(12px, 2.2dvh, 22px) 18px;
-  border-radius: 18px;
+  padding: clamp(10px, 1.8dvh, 16px) 14px;
+  border-radius: 14px;
   background-color: rgba(255, 255, 255, 0.025);
   border: 1.5px solid transparent;
   cursor: pointer;
-  transition: background-color 0.2s, border-color 0.2s, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: background-color 0.2s, border-color 0.2s, transform 0.15s;
   outline: none;
-}
-
-.display-row:hover {
-  background-color: rgba(255, 255, 255, 0.04);
 }
 
 .display-row.active {
   background-color: rgba(255, 255, 255, 0.07);
   border-color: rgba(255, 255, 255, 0.12);
-  transform: scale(1.01);
 }
 
 .display-row:active {
@@ -160,15 +151,15 @@ html, body {
 .currency-info {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .currency-flag {
   border-radius: 50%;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
   display: block;
-  width: clamp(24px, 3.2dvh, 28px);
-  height: clamp(24px, 3.2dvh, 28px);
+  width: clamp(22px, 3dvh, 26px);
+  height: clamp(22px, 3dvh, 26px);
 }
 
 .currency-meta {
@@ -177,16 +168,15 @@ html, body {
 }
 
 .currency-code {
-  font-size: clamp(16px, 2.3dvh, 19px);
+  font-size: clamp(15px, 2.2dvh, 18px);
   font-weight: 700;
   letter-spacing: 0.5px;
   line-height: 1.2;
 }
 
 .currency-name {
-  font-size: clamp(10px, 1.4dvh, 12px);
+  font-size: clamp(10px, 1.4dvh, 11px);
   color: var(--color-text-secondary);
-  font-weight: 400;
   margin-top: 1px;
 }
 
@@ -196,7 +186,7 @@ html, body {
   align-items: baseline;
   justify-content: flex-end;
   text-align: right;
-  max-width: 60%;
+  max-width: 65%;
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -206,14 +196,14 @@ html, body {
 }
 
 .currency-symbol {
-  font-size: clamp(18px, 2.8dvh, 24px);
+  font-size: clamp(16px, 2.6dvh, 22px);
   font-weight: 300;
   color: var(--color-text-secondary);
   margin-right: 4px;
 }
 
 .currency-value {
-  font-size: clamp(28px, 4.4dvh, 38px);
+  font-size: clamp(26px, 4.2dvh, 36px);
   font-weight: 500;
   white-space: nowrap;
   letter-spacing: -0.5px;
@@ -227,7 +217,7 @@ html, body {
 .cursor {
   display: inline-block;
   width: 2.5px;
-  height: clamp(24px, 3.8dvh, 32px);
+  height: clamp(22px, 3.6dvh, 30px);
   background-color: var(--color-key-orange);
   margin-left: 4px;
   border-radius: 1px;
@@ -235,12 +225,12 @@ html, body {
   animation: blink 1s step-start infinite;
 }
 
-/* Divider & Rate Preview */
+/* Divider & Rate Preview - Shrunk */
 .divider {
   position: relative;
   height: 1px;
   background-color: rgba(255, 255, 255, 0.08);
-  margin: clamp(4px, 1.2dvh, 12px) 12px;
+  margin: 4px 12px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -249,30 +239,32 @@ html, body {
 .rate-preview {
   position: absolute;
   background-color: var(--color-bg);
-  padding: 0 16px;
-  font-size: clamp(11px, 1.6dvh, 13px);
+  padding: 0 12px;
+  font-size: clamp(10px, 1.5dvh, 12px);
   font-weight: 500;
   color: var(--color-text-secondary);
   letter-spacing: 0.2px;
 }
 
-/* Keypad Section (using fluid columns auto-fitting to button size) */
+/* Keypad Section - Maximized to span entire width and height */
 .keypad-container {
   display: grid;
-  grid-template-columns: repeat(3, auto);
-  justify-content: center;
-  gap: clamp(8px, 1.6dvh, 14px);
-  padding: 8px 24px clamp(12px, 3dvh, 28px) 24px;
+  grid-template-columns: repeat(3, 1fr); /* 1fr stretches keys to fill full screen width */
+  justify-content: stretch;
+  gap: 8px; /* Tighter gap to maximize key surface area */
+  padding: 4px 10px clamp(8px, 2dvh, 16px) 10px; /* Reduced paddings */
   background-color: var(--color-bg);
+  width: 100%;
 }
 
-/* Calculator keys styling (scaled dynamically with viewport height) */
+/* Key Button - Replaced aspect-ratio circle with rounded rectangle to prevent vertical clipping */
 .key {
-  width: clamp(52px, 8.4dvh, 78px);
-  height: clamp(52px, 8.4dvh, 78px);
-  border-radius: 50%;
+  width: 100%; /* Stretches to fill columns */
+  height: clamp(54px, 7.8dvh, 72px); /* Scales height with screen space */
+  border-radius: 16px; /* Cohesive rounded tiles */
   border: none;
-  font-size: clamp(22px, 3.2dvh, 28px);
+  font-size: clamp(22px, 3.4dvh, 28px);
+  font-weight: 400;
   color: var(--color-text-primary);
   display: flex;
   align-items: center;
@@ -285,7 +277,7 @@ html, body {
 }
 
 .key:active {
-  transform: scale(0.92);
+  transform: scale(0.94);
 }
 
 .key svg {
@@ -326,13 +318,12 @@ html, body {
   background-color: var(--color-key-orange-active);
 }
 
-/* Double key (0) spanning 2 columns */
+/* Double key (0) spanning 2 columns as a rounded tile */
 .key.btn-double {
   grid-column: span 2;
-  aspect-ratio: auto;
-  border-radius: 50px;
-  width: auto;
-  height: clamp(52px, 8.4dvh, 78px);
+  border-radius: 16px;
+  width: 100%;
+  height: clamp(54px, 7.8dvh, 72px);
   justify-content: flex-start;
-  padding-left: clamp(20px, 3.5dvh, 32px);
+  padding-left: clamp(24px, 5vw, 36px);
 }

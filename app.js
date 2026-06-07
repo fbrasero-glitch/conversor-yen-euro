@@ -245,6 +245,17 @@ function toggleCurrencyDirection() {
 function handleNumericInput(value) {
   let currentVal = state.inputs[state.activeCurrency];
 
+  // Block decimals completely for JPY
+  if (state.activeCurrency === 'JPY' && value === '.') return;
+
+  // Block more than 2 decimal places for EUR
+  if (state.activeCurrency === 'EUR' && value !== '.') {
+    if (currentVal.includes('.')) {
+      const decimals = currentVal.split('.')[1];
+      if (decimals && decimals.length >= 2) return;
+    }
+  }
+
   // Count current digits to prevent layout breakage
   const digitCount = currentVal.replace(/[^0-9]/g, '').length;
   if (digitCount >= MAX_DIGITS && value !== '.') return;
@@ -306,15 +317,16 @@ function recalculateConversion() {
   let passiveValFloat;
 
   if (active === 'EUR') {
-    passiveValFloat = activeValFloat * rate;
+    // EUR to JPY: Round to whole Yen
+    passiveValFloat = Math.round(activeValFloat * rate);
+    state.inputs[passive] = passiveValFloat.toString();
   } else {
-    passiveValFloat = activeValFloat / rate;
+    // JPY to EUR: Round to exactly 2 decimal places
+    passiveValFloat = Math.round((activeValFloat / rate) * 100) / 100;
+    state.inputs[passive] = passiveValFloat.toFixed(2);
   }
 
-  // Limit precision to avoid layout overflow and store as editing string
-  const limitedPassiveStr = limitPrecision(passiveValFloat);
-  state.inputs[passive] = limitedPassiveStr;
-  updatePassiveUI(formatConvertedValue(parseFloat(limitedPassiveStr), passive));
+  updatePassiveUI(formatConvertedValue(passiveValFloat, passive));
 }
 
 // Limit precision to avoid layout breaking when converting long numbers
@@ -344,18 +356,10 @@ function formatConvertedValue(val, currency) {
   if (isNaN(val) || val === 0) return '0';
   
   if (currency === 'JPY') {
-    // Japanese Yen has no fractional units in standard transactions.
-    // If rate conversion makes it less than 100 JPY, keep cents for accuracy.
-    if (val >= 100) {
-      return Math.round(val).toLocaleString('ja-JP');
-    } else {
-      return val.toLocaleString('ja-JP', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    }
+    // JPY always formatted as an integer (0 decimals)
+    return Math.round(val).toLocaleString('ja-JP', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
   } else {
-    // Euro uses cent/cents. If value is micro-cents (below 0.01), show more decimals.
-    if (val < 0.01 && val > 0) {
-      return val.toLocaleString('de-DE', { minimumFractionDigits: 4, maximumFractionDigits: 4 });
-    }
+    // EUR always formatted with exactly 2 decimals
     return val.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
 }
