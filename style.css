@@ -1,0 +1,364 @@
+/* iOS Calculator Inspired Stylesheet */
+
+:root {
+  --color-bg: #000000;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #8e8e93;
+  --color-key-dark-gray: #333333;
+  --color-key-dark-gray-active: #555555;
+  --color-key-light-gray: #a5a5a5;
+  --color-key-light-gray-active: #d2d2d2;
+  --color-key-orange: #ff9f0a;
+  --color-key-orange-active: #ffb037;
+  --color-status-online: #30d158;
+  --color-status-offline: #ff9f0a;
+  
+  --font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Base reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-family);
+  overflow: hidden;
+  position: fixed; /* Prevents scroll-bounce on iOS */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Main app container */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  max-width: 450px; /* Centered layout for larger screens */
+  margin: 0 auto;
+  padding-top: env(safe-area-inset-top, 20px);
+  padding-bottom: env(safe-area-inset-bottom, 20px);
+  background-color: var(--color-bg);
+}
+
+/* Header Section */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px 8px 24px;
+}
+
+.status-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: rgba(255, 255, 255, 0.08);
+  padding: 6px 14px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: background-color 0.3s;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-status-online);
+  box-shadow: 0 0 8px var(--color-status-online);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.status-pill.offline .status-dot {
+  background-color: var(--color-status-offline);
+  box-shadow: 0 0 8px var(--color-status-offline);
+}
+
+.status-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  letter-spacing: -0.2px;
+}
+
+.refresh-btn {
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.refresh-btn:active {
+  color: var(--color-text-primary);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.refresh-btn svg {
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.refresh-btn.spinning svg {
+  transform: rotate(360deg);
+}
+
+/* Display Container */
+.display-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8px 24px;
+  gap: 12px;
+}
+
+/* Display Rows */
+.display-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 18px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.25s, border-color 0.25s, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+}
+
+.display-row:hover {
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.display-row.active {
+  background-color: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: scale(1.01);
+}
+
+.display-row:active {
+  transform: scale(0.99);
+}
+
+/* Currency Meta Info */
+.currency-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.currency-flag {
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  display: block;
+}
+
+.currency-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.currency-code {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}
+
+.currency-name {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  font-weight: 400;
+  margin-top: 1px;
+}
+
+/* Value text block */
+.value-container {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  text-align: right;
+  max-width: 60%;
+  overflow-x: auto;
+  scrollbar-width: none; /* Hide scrollbars for clean UI */
+}
+
+.value-container::-webkit-scrollbar {
+  display: none;
+}
+
+.currency-symbol {
+  font-size: 24px;
+  font-weight: 300;
+  color: var(--color-text-secondary);
+  margin-right: 4px;
+}
+
+.currency-value {
+  font-size: 38px;
+  font-weight: 500;
+  white-space: nowrap;
+  letter-spacing: -0.5px;
+}
+
+/* Blink cursor for active row */
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.cursor {
+  display: inline-block;
+  width: 2.5px;
+  height: 34px;
+  background-color: var(--color-key-orange);
+  margin-left: 4px;
+  border-radius: 1px;
+  align-self: center;
+  animation: blink 1s step-start infinite;
+}
+
+/* Divider & Rate Preview */
+.divider {
+  position: relative;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.08);
+  margin: 14px 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rate-preview {
+  position: absolute;
+  background-color: var(--color-bg);
+  padding: 0 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.2px;
+}
+
+/* Keypad Section */
+.keypad-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  padding: 16px 24px 28px 24px;
+  background-color: var(--color-bg);
+}
+
+/* Calculator keys styling */
+.key {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: none;
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  transition: background-color 0.15s, transform 0.08s;
+  outline: none;
+}
+
+.key:active {
+  transform: scale(0.92);
+}
+
+/* Button variants */
+.btn-dark-gray {
+  background-color: var(--color-key-dark-gray);
+  color: var(--color-text-primary);
+}
+
+.btn-dark-gray:active {
+  background-color: var(--color-key-dark-gray-active);
+}
+
+.btn-light-gray {
+  background-color: var(--color-key-light-gray);
+  color: #000000;
+  font-weight: 500;
+}
+
+.btn-light-gray:active {
+  background-color: var(--color-key-light-gray-active);
+}
+
+.btn-light-gray svg {
+  stroke: #000000;
+}
+
+.btn-orange {
+  background-color: var(--color-key-orange);
+  color: var(--color-text-primary);
+}
+
+.btn-orange:active {
+  background-color: var(--color-key-orange-active);
+}
+
+/* Double key (0) spanning 2 columns */
+.key.btn-double {
+  grid-column: span 2;
+  aspect-ratio: auto;
+  border-radius: 50px;
+  height: 100%;
+  justify-content: flex-start;
+  padding-left: 32px;
+}
+
+/* Small adjustments for small screen heights */
+@media (max-height: 650px) {
+  .app-header {
+    padding: 8px 16px 4px 16px;
+  }
+  .display-container {
+    padding: 4px 16px;
+    gap: 6px;
+  }
+  .display-row {
+    padding: 14px 14px;
+    border-radius: 14px;
+  }
+  .currency-value {
+    font-size: 28px;
+  }
+  .currency-symbol {
+    font-size: 20px;
+  }
+  .cursor {
+    height: 24px;
+  }
+  .divider {
+    margin: 8px 8px;
+  }
+  .keypad-container {
+    gap: 10px;
+    padding: 8px 16px 16px 16px;
+  }
+  .key {
+    font-size: 22px;
+  }
+  .key.btn-double {
+    padding-left: 24px;
+  }
+}

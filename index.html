@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Yen & Euro | Conversor</title>
+  
+  <!-- PWA Meta Tags -->
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="Conversor de divisas premium y ultra rápido entre Yenes (JPY) y Euros (EUR). Inspirado en el diseño nativo de iOS.">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <!-- iOS Meta Tags -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="YenEuro">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  
+  <!-- Fonts & Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Top Bar: Network status and Current Rate -->
+    <header class="app-header">
+      <div class="status-pill" id="status-pill">
+        <span class="status-dot"></span>
+        <span class="status-text" id="status-text">Cargando cotización...</span>
+      </div>
+      <button class="refresh-btn" id="refresh-btn" aria-label="Actualizar cotización">
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Main Displays -->
+    <main class="display-container">
+      
+      <!-- EUR Display Row -->
+      <div class="display-row active" id="row-EUR" data-currency="EUR" role="button" tabindex="0" aria-label="Introducir Euros">
+        <div class="currency-info">
+          <!-- EU Flag -->
+          <svg viewBox="0 0 24 24" width="28" height="28" class="currency-flag">
+            <mask id="circle-mask-eu">
+              <circle cx="12" cy="12" r="12" fill="#fff"/>
+            </mask>
+            <g mask="url(#circle-mask-eu)">
+              <rect width="24" height="24" fill="#003399"/>
+              <g fill="#ffcc00" transform="translate(12,12) scale(0.8)">
+                <circle cx="0" cy="-7" r="0.8"/>
+                <circle cx="3.5" cy="-6" r="0.8"/>
+                <circle cx="6" cy="-3.5" r="0.8"/>
+                <circle cx="7" cy="0" r="0.8"/>
+                <circle cx="6" cy="3.5" r="0.8"/>
+                <circle cx="3.5" cy="6" r="0.8"/>
+                <circle cx="0" cy="7" r="0.8"/>
+                <circle cx="-3.5" cy="6" r="0.8"/>
+                <circle cx="-6" cy="3.5" r="0.8"/>
+                <circle cx="-7" cy="0" r="0.8"/>
+                <circle cx="-6" cy="-3.5" r="0.8"/>
+                <circle cx="-3.5" cy="-6" r="0.8"/>
+              </g>
+            </g>
+          </svg>
+          <div class="currency-meta">
+            <span class="currency-code">EUR</span>
+            <span class="currency-name">Euro</span>
+          </div>
+        </div>
+        <div class="value-container">
+          <span class="currency-symbol">€</span>
+          <span class="currency-value" id="val-EUR">0</span>
+          <span class="cursor" id="cursor-EUR"></span>
+        </div>
+      </div>
+
+      <!-- Swap visual line separator -->
+      <div class="divider">
+        <span class="rate-preview" id="rate-preview">1 EUR = -- JPY</span>
+      </div>
+
+      <!-- JPY Display Row -->
+      <div class="display-row" id="row-JPY" data-currency="JPY" role="button" tabindex="0" aria-label="Introducir Yenes">
+        <div class="currency-info">
+          <!-- Japan Flag -->
+          <svg viewBox="0 0 24 24" width="28" height="28" class="currency-flag">
+            <mask id="circle-mask-jp">
+              <circle cx="12" cy="12" r="12" fill="#fff"/>
+            </mask>
+            <g mask="url(#circle-mask-jp)">
+              <rect width="24" height="24" fill="#ffffff" stroke="#f0f0f0" stroke-width="1"/>
+              <circle cx="12" cy="12" r="5.5" fill="#bc002d"/>
+            </g>
+          </svg>
+          <div class="currency-meta">
+            <span class="currency-code">JPY</span>
+            <span class="currency-name">Yen Japonés</span>
+          </div>
+        </div>
+        <div class="value-container">
+          <span class="currency-symbol">¥</span>
+          <span class="currency-value" id="val-JPY">0</span>
+          <span class="cursor" id="cursor-JPY" style="display: none;"></span>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Keypad Section -->
+    <footer class="keypad-container">
+      <button class="key btn-light-gray" id="key-AC" aria-label="Limpiar todo">AC</button>
+      <button class="key btn-light-gray" id="key-backspace" aria-label="Borrar último dígito">
+        <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/>
+          <line x1="18" y1="9" x2="12" y2="15"/>
+          <line x1="12" y1="9" x2="18" y2="15"/>
+        </svg>
+      </button>
+      <button class="key btn-orange" id="key-swap" aria-label="Alternar dirección de conversión">
+        <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="17 1 21 5 17 9"/>
+          <line x1="3" y1="5" x2="21" y2="5"/>
+          <polyline points="7 23 3 19 7 15"/>
+          <line x1="21" y1="19" x2="3" y2="19"/>
+        </svg>
+      </button>
+      
+      <button class="key btn-dark-gray" data-value="7">7</button>
+      <button class="key btn-dark-gray" data-value="8">8</button>
+      <button class="key btn-dark-gray" data-value="9">9</button>
+      
+      <button class="key btn-dark-gray" data-value="4">4</button>
+      <button class="key btn-dark-gray" data-value="5">5</button>
+      <button class="key btn-dark-gray" data-value="6">6</button>
+      
+      <button class="key btn-dark-gray" data-value="1">1</button>
+      <button class="key btn-dark-gray" data-value="2">2</button>
+      <button class="key btn-dark-gray" data-value="3">3</button>
+      
+      <button class="key btn-dark-gray btn-double" data-value="0">0</button>
+      <button class="key btn-dark-gray" data-value=".">.</button>
+    </footer>
+    
+  </div>
+</body>
+</html>
